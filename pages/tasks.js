@@ -40,7 +40,6 @@ const Tasks = () => {
               onChange={() => handleToggleTask(task.id)}
             />
             <span>{task.title}</span>
-            {task.hover && <span className={styles.hoverLabel}>(HOVER)</span>}
             <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
               🗑️
             </button>
