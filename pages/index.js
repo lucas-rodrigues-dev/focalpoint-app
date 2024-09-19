@@ -1,9 +1,11 @@
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import AddTaskModal from '../components/AddTaskModal';
 
 export default function Home() {
   const router = useRouter();
   const [userName, setUserName] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const handleStart = () => {
     if (userName) {

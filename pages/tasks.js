@@ -1,60 +1,83 @@
-import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
-import TaskList from '../components/TaskList';
+import React, { useState } from 'react';
 import AddTaskModal from '../components/AddTaskModal';
-import DeleteTaskModal from '../components/DeleteTaskModal';
-import styles from '../styles/TaskList.module.scss'
+import styles from '../styles/TaskList.module.scss';
 
-export default function TasksPage() {
-    useEffect(() => {
-        const formatDateTime = () => {
-            const now = new Date();
-            const options = {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric'
-            };
-            return now.toLocaleDateString('pt-BR', options);
-        };
-    
-        setCurrentDateTime(formatDateTime());
-    }, []);
-
-  const router = useRouter();
-  const { user } = router.query;
-  const [currentDateTime, setCurrentDateTime] = useState('');
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
+const Tasks = () => {
   const [tasks, setTasks] = useState([
-    "Lavar as mãos", "Fazer um bolo", "Lavar a louça"
+    { id: 1, title: 'Lavar as mãos', completed: false },
+    { id: 2, title: 'Fazer um bolo', completed: false, hover: true },
+    { id: 3, title: 'Lavar a louça', completed: false },
+    { id: 4, title: 'Levar o lixo para fora', completed: true },
   ]);
 
-  const addTask = (newTask) => {
-    setTasks([...tasks, newTask]);
-    setShowAddModal(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleToggleTask = (id) => {
+    const updatedTasks = tasks.map((task) =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    setTasks(updatedTasks);
   };
 
-  const deleteTask = (taskIndex) => {
-    setTasks(tasks.filter((_, index) => index !== taskIndex));
-    setShowDeleteModal(false);
+  const handleDeleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
+
+  const handleAddTask = (newTask) => {
+    setTasks([...tasks, newTask]);
+    setIsModalOpen(false);
   };
 
   return (
-    <div>
-      <h1>Bem-vindo de volta, {user}</h1>
-      <span className={styles.dateTime}>{currentDateTime}</span>
-      <TaskList tasks={tasks} onDelete={() => setShowDeleteModal(true)} />
-      <button onClick={() => setShowAddModal(true)}>Adicionar nova tarefa</button>
+    <div className={styles.tasksContainer}>
+      <h2>Suas tarefas de hoje</h2>
+      <ul className={styles.taskList}>
+        {tasks.filter(task => !task.completed).map((task) => (
+          <li key={task.id} className={`${styles.taskItem} ${task.completed ? styles.completed : ''}`}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => handleToggleTask(task.id)}
+            />
+            <span>{task.title}</span>
+            {task.hover && <span className={styles.hoverLabel}>(HOVER)</span>}
+            <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
+              🗑️
+            </button>
+          </li>
+        ))}
+      </ul>
+      <h3>Tarefas finalizadas</h3>
+      <ul className={styles.taskList}>
+        {tasks.filter(task => task.completed).map((task) => (
+          <li key={task.id} className={`${styles.taskItem} ${styles.completed}`}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => handleToggleTask(task.id)}
+            />
+            <span>{task.title}</span>
+            <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
+              🗑️
+            </button>
+          </li>
+        ))}
+      </ul>
+      <button 
+        className={styles.addTaskButton} 
+        onClick={() => setIsModalOpen(true)} // Abrir o modal ao clicar
+      >
+        Adicionar nova tarefa
+      </button>
 
-      {showAddModal && (
-        <AddTaskModal onAdd={addTask} onCancel={() => setShowAddModal(false)} />
-      )}
-      {showDeleteModal && (
-        <DeleteTaskModal onDelete={() => deleteTask(1)} onCancel={() => setShowDeleteModal(false)} />
+      {/* Renderiza o modal quando o estado estiver "true" */}
+      {isModalOpen && (
+        <AddTaskModal 
+          onClose={() => setIsModalOpen(false)} // Função para fechar o modal
+          onAddTask={handleAddTask} // Função para adicionar a tarefa
+        />
       )}
     </div>
   );
-}
+};
+export default Tasks;

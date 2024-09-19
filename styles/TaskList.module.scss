@@ -1,16 +1,95 @@
+.tasksContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 600px) {
+    padding: 10px;
+    width: 90%;
+  }
+}
+.todayTasks, .completedTasks {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
 .taskList {
-    ul {
-      list-style: none;
-    }
+  width: 100%;
+  list-style-type: none;
+  padding: 0;
+}
+
+.taskItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  border: 1px dashed #ddd;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
   
-    li {
-      display: flex;
-      justify-content: space-between;
-      margin: 10px 0;
-    }
+  input[type="checkbox"] {
+    margin-right: 10px;
   }
 
+  span {
+    flex-grow: 1;
+    font-size: 16px;
+  }
 
-  .dateTime {
+  .hoverLabel {
+    font-size: 12px;
     color: red;
+    margin-left: 10px;
   }
+
+  &:hover {
+    background-color: #e6f7ff;
+  }
+
+  &.completed {
+    background-color: #e0f7fa;
+    text-decoration: line-through;
+  }
+}
+
+.deleteButton {
+  background: none;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  font-size: 18px;
+
+  &:hover {
+    color: #e57373;
+  }
+}
+
+.addTaskButton {
+  background-color: #0099ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #007acc;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+  }
+}

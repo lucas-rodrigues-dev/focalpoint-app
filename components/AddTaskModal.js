@@ -1,28 +1,42 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styles from '../styles/AddTaskModal.module.scss';
 
-export default function AddTaskModal({ onAdd, onCancel }) {
-  const [taskTitle, setTaskTitle] = useState('');
+const AddTaskModal = ({ onClose, onAddTask }) => {
+  const [newTaskTitle, setNewTaskTitle] = useState('');
 
-  const handleAdd = () => {
-    if (taskTitle) {
-      onAdd(taskTitle);
+  const handleAddTask = () => {
+    if (newTaskTitle.trim()) {
+      const newTask = {
+        id: Math.random(), // Apenas um id temporário
+        title: newTaskTitle,
+        completed: false,
+      };
+      onAddTask(newTask);
+      onClose();
     }
   };
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <h3>Nova tarefa</h3>
-        <input 
-          type="text" 
-          placeholder="Digite" 
-          value={taskTitle}
-          onChange={(e) => setTaskTitle(e.target.value)}
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
+        <h2>Nova tarefa</h2>
+        <input
+          type="text"
+          value={newTaskTitle}
+          onChange={(e) => setNewTaskTitle(e.target.value)}
+          placeholder="Digite"
         />
-        <button onClick={onCancel}>Cancelar</button>
-        <button onClick={handleAdd}>Adicionar</button>
+        <div className={styles.modalActions}>
+          <button className={styles.cancelButton} onClick={onClose}>
+            Cancelar
+          </button>
+          <button className={styles.addButton} onClick={handleAddTask}>
+            Adicionar
+          </button>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default AddTaskModal;
