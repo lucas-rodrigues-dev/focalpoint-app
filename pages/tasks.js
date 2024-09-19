@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import AddTaskModal from '../components/AddTaskModal';
 import styles from '../styles/TaskList.module.scss';
-import Header from '../components/header';
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([
