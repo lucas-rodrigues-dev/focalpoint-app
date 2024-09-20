@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import AddTaskModal from '../components/AddTaskModal';
+import AddTaskModal from '../components/AddTaskModal'; 
 import styles from '../styles/TaskList.module.scss';
+import Header from '../components/Header'; // Menu com logo, nome e data/hora
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([
@@ -29,54 +30,60 @@ const Tasks = () => {
   };
 
   return (
-    <div className={styles.tasksContainer}>
-      <h2>Suas tarefas de hoje</h2>
-      <ul className={styles.taskList}>
-        {tasks.filter(task => !task.completed).map((task) => (
-          <li key={task.id} className={`${styles.taskItem} ${task.completed ? styles.completed : ''}`}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggleTask(task.id)}
-            />
-            <span>{task.title}</span>
-            <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
-              🗑️
-            </button>
-          </li>
-        ))}
-      </ul>
-      <h3>Tarefas finalizadas</h3>
-      <ul className={styles.taskList}>
-        {tasks.filter(task => task.completed).map((task) => (
-          <li key={task.id} className={`${styles.taskItem} ${styles.completed}`}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggleTask(task.id)}
-            />
-            <span>{task.title}</span>
-            <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
-              🗑️
-            </button>
-          </li>
-        ))}
-      </ul>
-      <button 
-        className={styles.addTaskButton} 
-        onClick={() => setIsModalOpen(true)} // Abrir o modal ao clicar
-      >
-        Adicionar nova tarefa
-      </button>
+    <>
+      {/* Menu superior fora do card de tarefas */}
+      <Header username="Marcus" />
 
-      {/* Renderiza o modal quando o estado estiver "true" */}
-      {isModalOpen && (
-        <AddTaskModal 
-          onClose={() => setIsModalOpen(false)} // Função para fechar o modal
-          onAddTask={handleAddTask} // Função para adicionar a tarefa
-        />
-      )}
-    </div>
+      <div className={styles.tasksContainer}>
+        <h2>Suas tarefas de hoje</h2>
+        <ul className={styles.taskList}>
+          {tasks.filter(task => !task.completed).map((task) => (
+            <li key={task.id} className={`${styles.taskItem} ${task.completed ? styles.completed : ''}`}>
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => handleToggleTask(task.id)}
+              />
+              <span>{task.title}</span>
+              <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
+                🗑️
+              </button>
+            </li>
+          ))}
+        </ul>
+        <h3>Tarefas finalizadas</h3>
+        <ul className={styles.taskList}>
+          {tasks.filter(task => task.completed).map((task) => (
+            <li key={task.id} className={`${styles.taskItem} ${styles.completed}`}>
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => handleToggleTask(task.id)}
+              />
+              <span>{task.title}</span>
+              <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
+                🗑️
+              </button>
+            </li>
+          ))}
+        </ul>
+        <button 
+          className={styles.addTaskButton} 
+          onClick={() => setIsModalOpen(true)} // Abrir o modal ao clicar
+        >
+          Adicionar nova tarefa
+        </button>
+
+        {/* Renderiza o modal quando o estado estiver "true" */}
+        {isModalOpen && (
+          <AddTaskModal 
+            onClose={() => setIsModalOpen(false)} // Função para fechar o modal
+            onAddTask={handleAddTask} // Função para adicionar a tarefa
+          />
+        )}
+      </div>
+    </>
   );
 };
+
 export default Tasks;

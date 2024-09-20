@@ -1,14 +1,17 @@
 import styles from '../styles/DeleteTaskModal.module.scss';
 
-export default function DeleteTaskModal({ onDelete, onCancel }) {
+const DeleteTaskModal = ({ onConfirm, onCancel }) => {
   return (
-    <div className={styles.overlay}>
-      <div className={styles.modal}>
+    <div className={styles.modalBackdrop}>
+      <div className={styles.modalContent}>
         <h3>Deletar tarefa</h3>
         <p>Tem certeza que você deseja deletar essa tarefa?</p>
-        <button onClick={onCancel}>Cancelar</button>
-        <button onClick={onDelete}>Deletar</button>
+        <div className={styles.buttons}>
+          <button onClick={onCancel}>Cancelar</button>
+          <button onClick={onConfirm} className={styles.deleteButton}>Deletar</button>
+        </div>
       </div>
     </div>
   );
 }
+export default DeleteTaskModal;

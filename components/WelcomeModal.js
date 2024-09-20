@@ -1,37 +1,34 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '../styles/WelcomeModal.module.scss';
 
-const WelcomeModal = ({ onSubmit }) => {
+const WelcomeModal = ({ onClose }) => {
     const [name, setName] = useState('');
 
-    const handleNameChange = (e) => {
-        setName(e.target.value);
-    };
-
-    const handleSubmit = () => {
-        if(name) {
-            onSubmit(name);
+    const handleSave = () => {
+        if (name.trim()) {
+            localStorage.setItem('userName', name);
+            onClose(name);
         }
     };
 
     return (
-        <div className={styles.overlay}>
-            <div className={styles.modal}>
-                <h3>Bem-vindo!</h3>
-                <p>Por favor, insira seu nome para continuar:</p>
+        <div className={styles.modalBackdrop}>
+            <div className={styles.modalContent}>
+                <h2>Bem-vindo!</h2>
+                <p>Por favor, insira seu nome:</p>
                 <input
+                    className={styles.modalInput}
                     type='text'
-                    placeholder='Digite Seu Nome'
-                    value='{name}'
-                    onChange={handleNameChange}
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder='Seu Nome'
                 />
-                <div className={styles.actions}>
-                    <button onClick={handleSubmit} className={styles.submitButton}>
-                        Continuar
-                    </button>
+                <div className={styles.buttons}>
+                    <button onClick={handleSave}>Salvar</button>
                 </div>
             </div>
         </div>
-    )
+    );
 };
+
 export default WelcomeModal;
