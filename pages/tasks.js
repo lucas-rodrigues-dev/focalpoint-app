@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
-import AddTaskModal from '../components/AddTaskModal'; 
+import React, { useEffect, useState } from 'react';
+import AddTaskModal from '../components/AddTaskModal';
+import DeleteTaskModal from '../components/DeleteTaskModal';
+import Header from '../components/Header';
 import styles from '../styles/TaskList.module.scss';
-import Header from '../components/Header'; // Menu com logo, nome e data/hora
 
 const Tasks = () => {
   const [tasks, setTasks] = useState([
     { id: 1, title: 'Lavar as mãos', completed: false },
-    { id: 2, title: 'Fazer um bolo', completed: false, hover: true },
+    { id: 2, title: 'Fazer um bolo', completed: false },
     { id: 3, title: 'Lavar a louça', completed: false },
     { id: 4, title: 'Levar o lixo para fora', completed: true },
   ]);
-
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    const storedUserName = localStorage.getItem('userName');
+    if (storedUserName) {
+      setUserName(storedUserName);
+    }
+  }, []);
 
   const handleToggleTask = (id) => {
     const updatedTasks = tasks.map((task) =>
@@ -30,10 +39,8 @@ const Tasks = () => {
   };
 
   return (
-    <>
-      {/* Menu superior fora do card de tarefas */}
-      <Header username="Marcus" />
-
+    <div>
+      <Header userName={userName} />
       <div className={styles.tasksContainer}>
         <h2>Suas tarefas de hoje</h2>
         <ul className={styles.taskList}>
@@ -46,7 +53,7 @@ const Tasks = () => {
               />
               <span>{task.title}</span>
               <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
-                🗑️
+                  🗑️
               </button>
             </li>
           ))}
@@ -69,20 +76,19 @@ const Tasks = () => {
         </ul>
         <button 
           className={styles.addTaskButton} 
-          onClick={() => setIsModalOpen(true)} // Abrir o modal ao clicar
+          onClick={() => setIsModalOpen(true)}
         >
           Adicionar nova tarefa
         </button>
 
-        {/* Renderiza o modal quando o estado estiver "true" */}
         {isModalOpen && (
           <AddTaskModal 
-            onClose={() => setIsModalOpen(false)} // Função para fechar o modal
-            onAddTask={handleAddTask} // Função para adicionar a tarefa
+            onClose={() => setIsModalOpen(false)}
+            onAddTask={handleAddTask}
           />
         )}
       </div>
-    </>
+    </div>
   );
 };
 

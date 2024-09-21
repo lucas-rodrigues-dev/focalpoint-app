@@ -1,39 +1,27 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../styles/Header.module.scss';
 
-const Header = ({ username }) => {
-  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+const Header = ({ userName }) => {
+  const [date, setDate] = useState('');
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentDateTime(new Date());
-    }, 1000);
-
-    return () => clearInterval(timer);
+    const currentDate = new Date().toLocaleDateString('pt-BR', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+    setDate(currentDate);
   }, []);
 
-  const formattedDate = currentDateTime.toLocaleDateString('pt-BR', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
-
-  const formattedTime = currentDateTime.toLocaleTimeString('pt-BR');
-
   return (
-    <header className={styles.header}>
-      <div className={styles.logo}>
-        <img src="./logo.png" alt="FocalPoint"/>
-        <span>FocalPoint</span>
+    <div className={styles.header}>
+      <div className={styles.logo}>FocalPoint</div>
+      <div className={styles.welcomeMessage}>
+        {userName ? `Bem-vindo de volta, ${userName}` : 'Bem-vindo!'}
       </div>
-      <div className={styles.username}>
-        Bem-vindo de volta, {username}
-      </div>
-      <div className={styles.datetime}>
-        {formattedDate}, {formattedTime}
-      </div>
-    </header>
+      <div className={styles.dateTime}>{date}</div>
+    </div>
   );
 };
 

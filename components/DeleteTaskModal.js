@@ -1,17 +1,20 @@
+import React from 'react';
 import styles from '../styles/DeleteTaskModal.module.scss';
 
-const DeleteTaskModal = ({ onConfirm, onCancel }) => {
+const DeleteTaskModal = ({ onClose, onDeleteTask }) => {
   return (
-    <div className={styles.modalBackdrop}>
+    <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h3>Deletar tarefa</h3>
-        <p>Tem certeza que você deseja deletar essa tarefa?</p>
-        <div className={styles.buttons}>
-          <button onClick={onCancel}>Cancelar</button>
-          <button onClick={onConfirm} className={styles.deleteButton}>Deletar</button>
+        <button className={styles.closeButton} onClick={onClose}>×</button>
+        <h2>Confirmação de exclusão</h2>
+        <p>Tem certeza que deseja excluir esta tarefa?</p>
+        <div className={styles.buttonContainer}>
+          <button className={styles.cancelButton} onClick={onClose}>Cancelar</button>
+          <button className={styles.deleteButton} onClick={onDeleteTask}>Excluir</button>
         </div>
       </div>
     </div>
   );
-}
+};
+
 export default DeleteTaskModal;
