@@ -1,6 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
+
 .homeContainer {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter Tight', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,7 +42,7 @@
   }
 
   .card input::placeholder {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter Tight', sans-serif;
     font-size: 15px;
   }
 
@@ -50,7 +51,7 @@
   }
   
   .card button {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter Tight', sans-serif;
     padding: 10px 20px;
     color: white;
     border: none;

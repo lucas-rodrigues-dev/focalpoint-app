@@ -13,6 +13,8 @@ const Tasks = () => {
   ]);
   
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState(null)
   const [userName, setUserName] = useState('');
 
   useEffect(() => {
@@ -29,8 +31,9 @@ const Tasks = () => {
     setTasks(updatedTasks);
   };
 
-  const handleDeleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+  const handleDeleteTask = () => {
+    setTasks(tasks.filter((task) => task.id !== taskToDelete.id));
+    setIsDeleteModalOpen(false);
   };
 
   const handleAddTask = (newTask) => {
@@ -38,8 +41,13 @@ const Tasks = () => {
     setIsModalOpen(false);
   };
 
+  const openDeleteModal = (task) => {
+    setTaskToDelete(task);
+    setIsDeleteModalOpen(true);
+  };
+
   return (
-    <div>
+    <div className={isModalOpen || isDeleteModalOpen ? styles.blurBackground : ''}>
       <Header userName={userName} />
       <div className={styles.tasksContainer}>
         <h2>Suas tarefas de hoje</h2>
@@ -52,7 +60,7 @@ const Tasks = () => {
                 onChange={() => handleToggleTask(task.id)}
               />
               <span>{task.title}</span>
-              <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
+              <button className={styles.deleteButton} onClick={() => openDeleteModal(task)}>
                   🗑️
               </button>
             </li>
@@ -68,7 +76,7 @@ const Tasks = () => {
                 onChange={() => handleToggleTask(task.id)}
               />
               <span>{task.title}</span>
-              <button className={styles.deleteButton} onClick={() => handleDeleteTask(task.id)}>
+              <button className={styles.deleteButton} onClick={() => onClick=() => openDeleteModal(task)}>
                 🗑️
               </button>
             </li>
@@ -76,20 +84,24 @@ const Tasks = () => {
         </ul>
         <button 
           className={styles.addTaskButton} 
-          onClick={() => setIsModalOpen(true)}
-        >
+          onClick={() => setIsModalOpen(true)}>
           Adicionar nova tarefa
         </button>
-
         {isModalOpen && (
           <AddTaskModal 
             onClose={() => setIsModalOpen(false)}
             onAddTask={handleAddTask}
           />
         )}
+
+        {isDeleteModalOpen && (
+          <DeleteTaskModal
+            onClose={() => setIsDeleteModalOpen(false)}
+            onDeleteTask={handleDeleteTask}
+          />
+        )}
       </div>
     </div>
   );
 };
-
 export default Tasks;
