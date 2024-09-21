@@ -16,7 +16,7 @@ const Header = ({ userName }) => {
 
   return (
     <div className={styles.header}>
-      <div className={styles.logo}>FocalPoint</div>
+      <div className={styles.logo}><img src="./logo.png" />FocalPoint</div>
       <div className={styles.welcomeMessage}>
         {userName ? `Bem-vindo de volta, ${userName}` : 'Bem-vindo!'}
       </div>

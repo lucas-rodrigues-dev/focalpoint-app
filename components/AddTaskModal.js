@@ -15,7 +15,7 @@ const AddTaskModal = ({ onClose, onAddTask }) => {
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h2>Adicionar nova tarefa</h2>
+        <h2 className={styles.modalTitle}>Nova tarefa</h2>
         <h3 className={styles.taskInputTitle}>Título</h3>
         <input
           type="text"

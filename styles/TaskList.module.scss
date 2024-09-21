@@ -11,12 +11,17 @@
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
 
   @media (max-width: 600px) {
     padding: 10px;
     width: 90%;
+    max-width: none;
+    margin: 2rem auto;
+    box-shadow: none;
   }
 }
+
 .todayTasks, .completedTasks {
   font-size: 18px;
   margin-bottom: 10px;
@@ -43,7 +48,7 @@
   border: 1px dashed #ddd;
   border-radius: 8px;
   transition: background-color 0.3s ease;
-  
+
   input[type="checkbox"] {
     margin-right: 10px;
   }
@@ -67,6 +72,16 @@
     background-color: #e0f7fa;
     text-decoration: line-through;
   }
+
+  @media (max-width: 600px) {
+    padding: 8px 10px;
+    span {
+      font-size: 14px;
+    }
+    input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+  }
 }
 
 .deleteButton {
@@ -79,13 +94,15 @@
   &:hover {
     color: #e57373;
   }
+
+  @media (max-width: 600px) {
+    font-size: 16px;
+  }
 }
 
 .addTaskButton {
   background: linear-gradient(270deg, #66D3FF, #3FBDFF, #0099FF);
   background-size: 400% 400%;
-  -webkit-animation: ButtonAnimation 40s ease infinite;
-  -moz-animation: ButtonAnimation 40s ease infinite;
   animation: ButtonAnimation 40s ease infinite;
   color: white;
   border: none;
@@ -105,5 +122,20 @@
 
   @media (max-width: 600px) {
     width: 100%;
+    font-size: 14px;
+    padding: 8px 16px;
+    margin-top: 15px;
+  }
+}
+
+@keyframes ButtonAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
